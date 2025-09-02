@@ -16,10 +16,13 @@
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-			"com.qi.qismorecommands.QisMoreCommands"
+          {
+            "adapter": "kotlin",
+            "value": "com.qi.qismorecommands.QisMoreCommands"
+          }
 		],
 		"client": [
-			"com.qi.qismorecommands.QisMoreCommandsClient"
+            "com.qi.qismorecommands.QisMoreCommandsClient"
 		]
 	},
 	"mixins": [

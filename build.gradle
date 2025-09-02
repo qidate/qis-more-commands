@@ -1,6 +1,7 @@
 plugins {
 	id 'fabric-loom' version "${loom_version}"
 	id 'maven-publish'
+    id 'org.jetbrains.kotlin.jvm'
 }
 
 version = project.mod_version
@@ -16,6 +17,11 @@ repositories {
 	// Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
 	// See https://docs.gradle.org/current/userguide/declaring_repositories.html
 	// for more information about repositories.
+    mavenCentral() // Maven中央仓库:cite[3]:cite[8]
+    maven {
+        name = 'Fabric'
+        url = 'https://maven.fabricmc.net/' // Fabric官方Maven仓库:cite[4]
+    }
 }
 
 loom {
@@ -38,7 +44,14 @@ dependencies {
 
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-	
+    modImplementation files(
+            "libs/fabric-language-kotlin-1.12.2+kotlin.2.0.20.jar",
+            "libs/kotlin-stdlib-2.0.20.jar",
+            "libs/kotlin-reflect-2.0.20.jar",
+            "libs/kotlin-stdlib-jdk8-2.0.20.jar",
+            "libs/kotlin-stdlib-jdk7-2.0.20.jar"
+    )
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
 }
 
 processResources {
@@ -59,8 +72,6 @@ java {
 	// If you remove this line, sources will not be generated.
 	withSourcesJar()
 
-	sourceCompatibility = JavaVersion.VERSION_21
-	targetCompatibility = JavaVersion.VERSION_21
 }
 
 jar {
@@ -87,4 +98,7 @@ publishing {
 		// The repositories here will be used for publishing your artifact, not for
 		// retrieving dependencies.
 	}
+}
+kotlin {
+    jvmToolchain(21)
 }
